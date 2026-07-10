@@ -1,27 +1,33 @@
 # ==========================================================================
 # Climatización Sur — Apache · SEO técnico
-# Canonical: https://www.climatizacionsur.cl/
+# Canonical estricto: https://www.climatizacionsur.cl/
 # ==========================================================================
 
-DirectoryIndex index.html
+# --------------------------------------------------------------------------
+# Redirecciones 301 canónicas (HTTPS + WWW) — prioridad máxima
+# Alineado con <link rel="canonical"> y og:url del sitio
+# --------------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+RewriteEngine On
 
-# UTF-8 por defecto (acentos en HTML y metas)
+# 1. Forzar HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 2. Forzar WWW
+RewriteCond %{HTTP_HOST} ^climatizacionsur\.cl [NC]
+RewriteRule ^(.*)$ https://www.climatizacionsur.cl/$1 [L,R=301]
+</IfModule>
+
+DirectoryIndex index.html
 AddDefaultCharset UTF-8
 
 # --------------------------------------------------------------------------
-# Redirecciones canónicas (301)
+# Normalización de URLs (sin duplicar HTTPS/WWW)
 # --------------------------------------------------------------------------
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
-
-  # HTTP → HTTPS
-  RewriteCond %{HTTPS} !=on
-  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-
-  # sin www → www (coincide con canonical, sitemap y schema)
-  RewriteCond %{HTTP_HOST} ^climatizacionsur\.cl$ [NC]
-  RewriteRule ^ https://www.climatizacionsur.cl%{REQUEST_URI} [R=301,L]
 
   # /index.html → URL limpia
   RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
@@ -60,14 +66,13 @@ AddDefaultCharset UTF-8
 </IfModule>
 
 # --------------------------------------------------------------------------
-# Seguridad básica (no afecta SEO)
+# Seguridad básica
 # --------------------------------------------------------------------------
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-# robots.txt y sitemap.xml accesibles en la raíz (sin bloqueo)
 <Files "robots.txt">
   Require all granted
 </Files>
