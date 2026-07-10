@@ -63,7 +63,7 @@
         "telephone": "+56900000000",
         "priceRange": "$$",
         "image": "https://www.climatizacionsur.cl/assets/og-chiloe.webp",
-        "logo": "https://www.climatizacionsur.cl/assets/og-climatizacion-sur.webp",
+        "logo": "https://www.climatizacionsur.cl/assets/logo-climatizacion-sur.webp",
         "parentOrganization": { "@id": "https://www.climatizacionsur.cl/#organization" },
         "address": {
           "@type": "PostalAddress",
@@ -176,7 +176,10 @@
 
   <header class="header" id="header">
     <div class="container header__inner">
-      <a href="../" class="logo" aria-label="Climatización Sur - Inicio">Climatización <em>Sur</em><small>Chiloé</small></a>
+      <a href="../" class="logo" aria-label="Climatización Sur - Inicio">
+        <img src="../assets/logo-climatizacion-sur.webp" alt="" width="40" height="40" class="logo__mark" decoding="async">
+        <span class="logo__text">Climatización <em>Sur</em><small>Chiloé</small></span>
+      </a>
       <nav class="nav" aria-label="Navegación principal">
         <a href="#servicios">Servicios</a>
         <a href="#refrigeracion">Refrigeración Comercial</a>
@@ -213,6 +216,16 @@
         </div>
       </nav>
       <div class="container hero__layout">
+        <div class="hero__visual">
+          <img
+            src="../assets/og-chiloe.webp"
+            alt="Climatización y cámaras de frío en Chiloé"
+            width="720"
+            height="450"
+            fetchpriority="high"
+            decoding="async"
+          >
+        </div>
         <div class="hero__content">
         <span class="hero__tag">Isla de Chiloé · Atención en terreno</span>
         <h1 id="hero-h1">Cámaras de Frío y Climatización en Chiloé</h1>
@@ -226,16 +239,6 @@
           </a>
           <a href="#refrigeracion" class="btn btn--outline btn--lg">Ver Cámaras de Frío</a>
         </div>
-        </div>
-        <div class="hero__visual">
-          <img
-            src="../assets/og-chiloe.webp"
-            alt="Climatización y cámaras de frío en Chiloé"
-            width="600"
-            height="450"
-            fetchpriority="high"
-            decoding="async"
-          >
         </div>
       </div>
     </section>
