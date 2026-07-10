@@ -18,6 +18,7 @@
   <link rel="icon" href="assets/favicon.ico" sizes="any">
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="preload" as="image" href="assets/hero-sur-compuesto.jpg" fetchpriority="high">
   <link rel="stylesheet" href="assets/style.css">
 
   <!-- Open Graph -->
@@ -258,11 +259,10 @@
 
   <main>
 
-    <!-- Hero · H1 -->
-    <section class="hero" aria-labelledby="hero-h1" style="--hero-bg: url('assets/og-climatizacion-sur.webp')">
+    <!-- Hero · H1 · banner full-bleed -->
+    <section class="hero hero--banner" aria-labelledby="hero-h1" style="--hero-bg: url('assets/hero-sur-compuesto.jpg')">
       <div class="hero__bg" aria-hidden="true"></div>
       <div class="hero__overlay" aria-hidden="true"></div>
-      <div class="hero__grid" aria-hidden="true"></div>
       <div class="container hero__layout">
         <div class="hero__content">
         <span class="hero__tag">Región de Los Lagos · Atención local</span>
@@ -278,48 +278,46 @@
           <a href="#cobertura" class="btn btn--outline btn--lg">Ver Cobertura por Zona</a>
         </div>
         </div>
-        <div class="hero__visual">
-          <img
-            src="assets/og-climatizacion-sur.webp"
-            alt="Instalación de aire acondicionado en la Región de Los Lagos"
-            width="600"
-            height="450"
-            fetchpriority="high"
-            decoding="async"
-          >
-        </div>
       </div>
     </section>
 
-    <!-- Socio Técnico Oficial -->
-    <section class="partner" aria-labelledby="partner-title">
-      <div class="container partner__inner">
-        <div>
-          <p class="partner__label" id="partner-title">Socio Técnico Oficial</p>
-          <p class="partner__note">Respaldados por operador local certificado en instalación y postventa HVAC. Trabajamos equipos de la marca <strong>Clark</strong>.</p>
-        </div>
-        <div class="partner__logos">
-          <div class="partner__logo-wrap">
+    <!-- Confianza · Socios Estratégicos -->
+    <section class="trust" aria-labelledby="trust-h2">
+      <div class="container">
+        <header class="section__head">
+          <span class="section__eyebrow">Confianza</span>
+          <h2 id="trust-h2">Socios Estratégicos y Respaldo Técnico</h2>
+          <p class="section__intro">Respaldados por operador local certificado en instalación y postventa HVAC. Trabajamos equipos de la marca <strong>Clark</strong>.</p>
+        </header>
+        <div class="trust__panel">
+          <div class="trust__item">
             <img
               src="assets/logo-socio-tecnico.webp"
               alt="Logo de la empresa del socio técnico oficial de Climatización Sur"
-              width="240"
-              height="56"
+              width="300"
+              height="70"
               loading="lazy"
               decoding="async"
             >
-            <p class="partner__logo-caption">Socio Técnico</p>
+            <p class="trust__caption">Socio Técnico</p>
           </div>
-          <div class="partner__logo-wrap partner__logo-wrap--brand">
+          <div class="trust__item trust__item--brand">
             <img
               src="assets/Clark.jpg"
               alt="Clark Air Conditioning - marca de equipos de climatización"
-              width="200"
-              height="48"
+              width="260"
+              height="62"
               loading="lazy"
               decoding="async"
             >
-            <p class="partner__logo-caption">Marca de Equipos</p>
+            <p class="trust__caption">Marca de Equipos</p>
+          </div>
+          <div class="trust__item trust__item--badge">
+            <div class="trust__badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/></svg>
+              <span class="trust__badge-num">10+</span>
+            </div>
+            <p class="trust__caption">Años de Experiencia Local</p>
           </div>
         </div>
       </div>
@@ -330,7 +328,7 @@
       <div class="container">
         <header class="section__head">
           <div class="section__banner">
-            <img src="assets/og-climatizacion-sur.webp" alt="Equipo de aire acondicionado instalado en hogar del sur de Chile" width="720" height="308" loading="lazy" decoding="async">
+            <img src="assets/banner-instalacion-ac.jpg" alt="Técnico certificado instalando una unidad interior de aire acondicionado en una casa moderna del sur de Chile" width="720" height="308" loading="lazy" decoding="async">
           </div>
           <span class="section__eyebrow">Aire Acondicionado</span>
           <h2 id="servicios-h2">Venta e Instalación de Aire Acondicionado en el Sur</h2>
@@ -399,7 +397,7 @@
       <div class="container">
         <header class="section__head">
           <div class="section__banner">
-            <img src="assets/og-climatizacion-sur.webp" alt="Cámara de frío comercial instalada en negocio del sur de Chile" width="720" height="308" loading="lazy" decoding="async">
+            <img src="assets/banner-camara-frio.jpg" alt="Cámara de frío comercial con productos en estanterías y visualizador de temperatura a -18°C" width="720" height="308" loading="lazy" decoding="async">
           </div>
           <span class="section__eyebrow">Refrigeración Comercial</span>
           <h2 id="ref-h2">Cámaras de Frío para Negocios del Sur</h2>
@@ -439,7 +437,8 @@
     </section>
 
     <!-- Cobertura · H2 -->
-    <section class="section section--muted" id="cobertura" aria-labelledby="coverage-h2">
+    <section class="section section--muted section--coverage" id="cobertura" aria-labelledby="coverage-h2">
+      <div class="coverage__map" aria-hidden="true"></div>
       <div class="container">
         <header class="section__head">
           <span class="section__eyebrow">Zona de operación</span>
@@ -449,7 +448,7 @@
 
         <div class="zones">
           <a href="puerto-montt/" class="zone zone--link">
-            <div class="zone__pin" aria-hidden="true">
+            <div class="zone__pin zone__pin--cyan" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
             <div>
@@ -458,7 +457,7 @@
             </div>
           </a>
           <a href="chiloe/" class="zone zone--link">
-            <div class="zone__pin" aria-hidden="true">
+            <div class="zone__pin zone__pin--amber" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
             <div>
@@ -467,7 +466,7 @@
             </div>
           </a>
           <article class="zone">
-            <div class="zone__pin" aria-hidden="true">
+            <div class="zone__pin zone__pin--green" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
             <div>
