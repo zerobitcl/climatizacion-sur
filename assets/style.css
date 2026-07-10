@@ -304,6 +304,29 @@ a { color: inherit; text-decoration: none; }
 .visit__price { color: var(--amber); }
 .visit p { font-size: 0.9375rem; color: rgba(255,255,255,0.7); max-width: 48ch; }
 
+/* B2B · Partner remoto (Santiago → Sur) */
+.b2b {
+  background: linear-gradient(135deg, var(--navy) 0%, #16324f 100%);
+  border-block-start: 1px solid rgba(0,180,216,0.22);
+  padding: 3rem 0;
+}
+.b2b__inner {
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem;
+}
+.b2b__eyebrow {
+  display: inline-block; font-size: 0.75rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--cyan-light);
+  margin-bottom: 0.5rem;
+}
+.b2b h3 {
+  font-size: clamp(1.25rem, 3.2vw, 1.75rem); font-weight: 800;
+  color: var(--white); letter-spacing: -0.02em; margin-bottom: 0.75rem;
+}
+.b2b p {
+  font-size: 0.975rem; color: rgba(255,255,255,0.72);
+  max-width: 54ch; margin-inline: auto; line-height: 1.65;
+}
+
 /* Coverage / zones */
 .zones { display: grid; grid-template-columns: 1fr; gap: 0.875rem; }
 .zone {
@@ -390,6 +413,8 @@ a.footer__brand-row:hover .footer__brand { color: var(--cyan-light); }
   .trust__item--primary img { max-height: 108px; }
   .zones { grid-template-columns: repeat(2, 1fr); }
   .visit__inner { flex-direction: row; text-align: left; justify-content: space-between; align-items: center; }
+  .b2b__inner { flex-direction: row; text-align: left; justify-content: space-between; align-items: center; gap: 2rem; }
+  .b2b p { margin-inline: 0; }
   .partner__inner { flex-direction: row; text-align: left; justify-content: space-between; align-items: center; }
   .footer__grid { grid-template-columns: repeat(2, 1fr); }
 }
