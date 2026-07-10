@@ -8,7 +8,9 @@
   'use strict';
 
   var CONFIG = {
-    whatsapp: '56900000000', // Reemplazar con el número real (código país + número, sin +)
+    whatsapp: '56967240110',
+    phoneDisplay: '+56 9 6724 0110',
+    instagram: 'https://www.instagram.com/tecnicoolcl/',
     brand: 'Climatización Sur'
   };
 

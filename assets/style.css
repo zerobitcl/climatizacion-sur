@@ -341,7 +341,8 @@ a { color: inherit; text-decoration: none; }
 /* Footer */
 .footer { background: var(--navy); color: rgba(255,255,255,0.6); padding: 3rem 0 2rem; }
 .footer__grid { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-bottom: 2rem; }
-.footer__brand-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.875rem; }
+.footer__brand-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.875rem; text-decoration: none; color: inherit; }
+a.footer__brand-row:hover .footer__brand { color: var(--cyan-light); }
 .footer__logo { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
 .footer__brand { font-size: 1.125rem; font-weight: 800; color: var(--white); margin-bottom: 0; }
 .footer__partner-logo {
