@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.climatizacionsur.cl/sitemap.xml
+Disallow: /valdivia/
+Disallow: /osorno/
+Disallow: /castro/
+Disallow: /chiloe/
+
+Sitemap: https://climatizacionsur.cl/sitemap.xml
