@@ -241,10 +241,13 @@ a { color: inherit; text-decoration: none; }
 .trust .section__head { margin-bottom: 2rem; }
 .trust__panel {
   display: flex; flex-direction: column; align-items: center; gap: 1rem;
-  max-width: 640px; margin-inline: auto;
+  max-width: 760px; margin-inline: auto;
 }
 .trust__secondary {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 0.875rem; width: 100%;
+  display: flex; flex-direction: column; gap: 0.875rem; width: 100%;
+}
+.trust__brands {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.875rem; width: 100%;
 }
 .trust__item {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -261,8 +264,9 @@ a { color: inherit; text-decoration: none; }
 }
 .trust__item--primary img { max-height: 96px; width: auto; object-fit: contain; }
 .trust__item--primary .trust__caption { font-size: 0.8125rem; color: var(--navy); }
-.trust__item--brand img { max-height: 44px; width: auto; object-fit: contain; opacity: 0.88; }
-.trust__item--badge { min-height: 110px; }
+.trust__item--brand { min-height: 108px; padding: 1rem 0.75rem; }
+.trust__item--brand img { max-height: 40px; width: auto; max-width: 100%; object-fit: contain; opacity: 0.92; }
+.trust__item--badge { min-height: 110px; width: 100%; }
 .trust__caption {
   font-size: 0.6875rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.08em; color: var(--gray-400); text-align: center;
@@ -401,7 +405,7 @@ a.footer__brand-row:hover .footer__brand { color: var(--cyan-light); }
 .wa-sticky__btn svg { width: 30px; height: 30px; }
 
 @media (max-width: 480px) {
-  .trust__secondary { grid-template-columns: 1fr; }
+  .trust__brands { grid-template-columns: repeat(2, 1fr); }
   .hero--banner .hero__visual--banner { max-width: 100%; }
   .hero { padding: 5.75rem 0 2.5rem; }
   .hero__actions .btn--lg { width: 100%; }
@@ -410,6 +414,7 @@ a.footer__brand-row:hover .footer__brand { color: var(--cyan-light); }
 @media (min-width: 640px) {
   .services { grid-template-columns: repeat(2, 1fr); }
   .services--duo { grid-template-columns: repeat(2, 1fr); max-width: 720px; }
+  .trust__brands { grid-template-columns: repeat(4, 1fr); }
   .trust__item--primary img { max-height: 108px; }
   .zones { grid-template-columns: repeat(2, 1fr); }
   .visit__inner { flex-direction: row; text-align: left; justify-content: space-between; align-items: center; }
@@ -565,4 +570,74 @@ a.footer__brand-row:hover .footer__brand { color: var(--cyan-light); }
 @media (max-width: 480px) {
   .lead-waitlist__form { grid-template-columns: 1fr; }
 }
+
+/* Landing /calefaccion — tabla comparativa (TOFU) */
+.hero__lead--shock {
+  font-size: clamp(1.05rem, 2.4vw, 1.2rem);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.92);
+  border-inline-start: 3px solid var(--amber);
+  padding-inline-start: 0.875rem;
+}
+.compare-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  background: var(--white);
+  border: 1px solid rgba(11, 26, 46, 0.08);
+}
+.compare-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+.compare-table th,
+.compare-table td {
+  padding: 1rem 1.125rem;
+  text-align: left;
+  vertical-align: top;
+  border-block-end: 1px solid rgba(11, 26, 46, 0.08);
+}
+.compare-table thead th {
+  background: var(--navy);
+  color: var(--white);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.compare-table tbody th[scope="row"] {
+  font-weight: 700;
+  color: var(--navy);
+  background: var(--gray-50);
+  white-space: nowrap;
+}
+.compare-table tbody tr:last-child th,
+.compare-table tbody tr:last-child td {
+  border-block-end: none;
+}
+.compare-table__win {
+  background: linear-gradient(180deg, rgba(0, 180, 216, 0.14), rgba(0, 180, 216, 0.06));
+  color: var(--navy);
+  font-weight: 600;
+  box-shadow: inset 0 0 0 2px rgba(0, 180, 216, 0.45);
+}
+.compare-table thead .compare-table__win {
+  background: linear-gradient(135deg, var(--cyan), #0096c7);
+  color: var(--white);
+  box-shadow: none;
+}
+.cta-band__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+@media (max-width: 480px) {
+  .cta-band__actions .btn--lg { width: 100%; }
+}
+
 
