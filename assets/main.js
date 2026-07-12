@@ -1,7 +1,6 @@
 /* ==========================================================================
    Climatización Sur — main.js compartido
-   Un solo archivo para todos los silos: se cachea una vez y sirve en todo el sitio.
-   Incluye ruteo de leads por IP (clúster lacustre) sin bloquear el render.
+   WhatsApp CTAs + cotización por WA + ruteo geo IP (fail-open).
    ========================================================================== */
 (function () {
   'use strict';
@@ -20,6 +19,24 @@
     var origin = window.location.href;
     var fullMsg = baseMsg + '\n\n— Origen: ' + origin;
     return 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(fullMsg);
+  }
+
+  function openWhatsApp(msg) {
+    window.open(buildWaUrl(msg), '_blank', 'noopener,noreferrer');
+  }
+
+  function cityFromPath() {
+    var m = window.location.pathname.match(/\/(puerto-montt|puerto-varas|llanquihue|frutillar|ancud|calefaccion)\//);
+    if (!m) return '';
+    var map = {
+      'puerto-montt': 'Puerto Montt',
+      'puerto-varas': 'Puerto Varas',
+      llanquihue: 'Llanquihue',
+      frutillar: 'Frutillar',
+      ancud: 'Ancud',
+      calefaccion: 'Calefacción (hub)'
+    };
+    return map[m[1]] || '';
   }
 
   function initWhatsAppLinks() {
@@ -57,6 +74,51 @@
     });
   }
 
+  function fieldValue(form, name) {
+    var el = form.querySelector('[name="' + name + '"]');
+    return el && el.value ? String(el.value).trim() : '';
+  }
+
+  function buildQuoteMessage(form) {
+    var city = form.getAttribute('data-city') || cityFromPath() || 'Sin especificar';
+    var name = fieldValue(form, 'name');
+    var phone = fieldValue(form, 'phone');
+    var message = fieldValue(form, 'message');
+    var lines = [
+      '*Cotización web — ' + CONFIG.brand + '*',
+      '',
+      'Hola, solicito una cotización técnica.',
+      '',
+      '• *Comuna / zona:* ' + city,
+      '• *Nombre:* ' + name,
+      '• *Teléfono:* ' + phone
+    ];
+    if (message) lines.push('• *Detalle del proyecto:* ' + message);
+    lines.push('', 'Quedo atento(a) a la visita técnica o cotización.');
+    return lines.join('\n');
+  }
+
+  function initQuoteForms() {
+    document.querySelectorAll('form.js-quote-form').forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var name = fieldValue(form, 'name');
+        var phone = fieldValue(form, 'phone');
+        if (!name) {
+          var n = form.querySelector('[name="name"]');
+          if (n) n.focus();
+          return;
+        }
+        if (!phone || phone.replace(/\D/g, '').length < 8) {
+          var p = form.querySelector('[name="phone"]');
+          if (p) p.focus();
+          return;
+        }
+        openWhatsApp(buildQuoteMessage(form));
+      });
+    });
+  }
+
   function normalizeCity(name) {
     return String(name || '')
       .toLowerCase()
@@ -82,7 +144,7 @@
   }
 
   function getQuoteForm() {
-    return document.querySelector('form.js-quote-form') || document.querySelector('form');
+    return document.querySelector('form.js-quote-form');
   }
 
   function showWaitlist(city) {
@@ -100,7 +162,7 @@
     wrap.innerHTML =
       '<p class="lead-waitlist__msg">Aún no tenemos cobertura técnica en <strong>' +
       escapeHtml(cityLabel) +
-      '</strong>. Déjanos tu correo y te avisaremos</p>' +
+      '</strong>. Déjanos tu correo y te avisaremos por WhatsApp</p>' +
       '<form class="lead-waitlist__form" action="#" method="post" novalidate>' +
       '<label class="visually-hidden" for="waitlist-email">Correo electrónico</label>' +
       '<input id="waitlist-email" name="email" type="email" required autocomplete="email" ' +
@@ -118,8 +180,19 @@
         if (input) input.focus();
         return;
       }
+      var msg = [
+        '*Lista de espera — ' + CONFIG.brand + '*',
+        '',
+        'Hola, aún no tienen cobertura en mi ciudad y quiero que me avisen.',
+        '',
+        '• *Ciudad detectada:* ' + cityLabel,
+        '• *Email:* ' + email,
+        '',
+        'Gracias.'
+      ].join('\n');
+      openWhatsApp(msg);
       wrap.innerHTML =
-        '<p class="lead-waitlist__msg">Gracias. Te avisaremos cuando tengamos cobertura en <strong>' +
+        '<p class="lead-waitlist__msg">Perfecto. Se abrirá WhatsApp con tus datos para avisar cobertura en <strong>' +
         escapeHtml(cityLabel) +
         '</strong>.</p>';
     });
@@ -152,7 +225,6 @@
       });
   }
 
-  /* Idle / post-load: no bloquea First Paint ni TTI */
   function scheduleGeoRouting() {
     var run = function () {
       fetchCityWithTimeout()
@@ -161,7 +233,7 @@
           showWaitlist(city);
         })
         .catch(function () {
-          /* Fail-open: formulario de cotización visible por defecto */
+          /* Fail-open */
         });
     };
 
@@ -175,5 +247,6 @@
   initWhatsAppLinks();
   initHeaderScroll();
   initSmoothAnchors();
+  initQuoteForms();
   scheduleGeoRouting();
 })();

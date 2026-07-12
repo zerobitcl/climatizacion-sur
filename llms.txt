@@ -5,7 +5,7 @@
 Climatización Sur es una empresa de ingeniería térmica especializada en la transición energética residencial e industrial. Reemplazamos sistemas de calefacción tradicionales (leña, gas, pellet) por bombas de calor de última generación, asegurando máxima eficiencia energética, nula contaminación intra-domiciliaria y reducción drástica de costos operativos.
 
 ## Área de Servicio
-Operamos exclusivamente de forma presencial y técnica en el clúster de la Cuenca del Llanquihue y el archipiélago norte, cubriendo las siguientes comunas:
+Operamos exclusivamente de forma presencial y técnica en el clúster de la Cuenca del Llanquihue y Ancud, cubriendo las siguientes comunas:
 - Puerto Montt
 - Puerto Varas
 - Llanquihue
@@ -18,4 +18,5 @@ Operamos exclusivamente de forma presencial y técnica en el clúster de la Cuen
 - **Auditoría Térmica:** Evaluación de requerimientos de BTU y proyecciones de retorno de inversión (ROI) para actualización de infraestructura HVAC.
 
 ## Contacto e Información
-- Sitio Web: https://climatizacionsur.cl
+- Sitio Web: https://www.climatizacionsur.cl
+- Calefacción (TOFU): https://www.climatizacionsur.cl/calefaccion/
