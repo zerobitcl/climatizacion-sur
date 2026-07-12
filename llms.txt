@@ -1,22 +1,20 @@
 # Climatización Sur
-> Expertos en climatización de alta eficiencia, aerotermia y aire acondicionado Inverter en el sur de Chile.
+> Expertos en climatización de alta eficiencia, aerotermia y aire acondicionado Inverter en Puerto Montt, Puerto Varas, Llanquihue, Frutillar y Ancud.
 
-## Sobre Nosotros
-Climatización Sur es una empresa de ingeniería térmica especializada en la transición energética residencial e industrial. Reemplazamos sistemas de calefacción tradicionales (leña, gas, pellet) por bombas de calor de última generación, asegurando máxima eficiencia energética, nula contaminación intra-domiciliaria y reducción drástica de costos operativos.
+Climatización Sur es una empresa de ingeniería térmica especializada en la transición energética residencial e industrial. Reemplazamos sistemas de calefacción tradicionales (leña, gas, pellet) por bombas de calor de última generación, con máxima eficiencia energética, nula contaminación intra-domiciliaria y menor costo operativo. Servicios: aerotermia y bombas de calor, aire acondicionado Inverter frío/calor, y auditoría térmica (BTU / ROI).
 
-## Área de Servicio
-Operamos exclusivamente de forma presencial y técnica en el clúster de la Cuenca del Llanquihue y Ancud, cubriendo las siguientes comunas:
-- Puerto Montt
-- Puerto Varas
-- Llanquihue
-- Frutillar
-- Ancud
+## Páginas principales
+- [Inicio](https://www.climatizacionsur.cl/): Hub de Climatización Sur — aire acondicionado y calefacción eficiente.
+- [Calefacción eficiente](https://www.climatizacionsur.cl/calefaccion/): Comparativa leña/gas vs aerotermia y bomba de calor (página TOFU).
+- [Sitemap](https://www.climatizacionsur.cl/sitemap.xml): Índice XML de URLs canónicas del sitio.
 
-## Servicios Principales
-- **Aerotermia y Bombas de Calor:** Instalación de sistemas de calefacción y agua caliente sanitaria (ACS) de alto rendimiento.
-- **Aire Acondicionado Inverter:** Soluciones de climatización frío/calor para control de temperatura exacto durante todo el año.
-- **Auditoría Térmica:** Evaluación de requerimientos de BTU y proyecciones de retorno de inversión (ROI) para actualización de infraestructura HVAC.
+## Cobertura local
+- [Puerto Montt](https://www.climatizacionsur.cl/puerto-montt/): Climatización y aire acondicionado en Puerto Montt.
+- [Puerto Varas](https://www.climatizacionsur.cl/puerto-varas/): Climatización y aire acondicionado en Puerto Varas.
+- [Llanquihue](https://www.climatizacionsur.cl/llanquihue/): Climatización y aire acondicionado en Llanquihue.
+- [Frutillar](https://www.climatizacionsur.cl/frutillar/): Climatización y aire acondicionado en Frutillar.
+- [Ancud](https://www.climatizacionsur.cl/ancud/): Climatización y aire acondicionado en Ancud.
 
-## Contacto e Información
-- Sitio Web: https://www.climatizacionsur.cl
-- Calefacción (TOFU): https://www.climatizacionsur.cl/calefaccion/
+## Contacto
+- [Sitio web](https://www.climatizacionsur.cl/): Canal oficial de información y cotización.
+- [WhatsApp / teléfono](https://wa.me/56967240110): +56 9 6724 0110 — cotización técnica y visita en terreno.
