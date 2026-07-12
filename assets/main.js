@@ -11,7 +11,7 @@
     phoneDisplay: '+56 9 6724 0110',
     instagram: 'https://www.instagram.com/tecnicoolcl/',
     brand: 'Climatización Sur',
-    cluster: ['puerto montt', 'puerto varas', 'llanquihue', 'frutillar'],
+    cluster: ['puerto montt', 'puerto varas', 'llanquihue', 'frutillar', 'ancud'],
     geoApi: 'https://ipapi.co/json/',
     geoTimeoutMs: 2500
   };

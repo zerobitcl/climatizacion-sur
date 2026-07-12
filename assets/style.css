@@ -424,7 +424,7 @@ a.footer__brand-row:hover .footer__brand { color: var(--cyan-light); }
   .services { grid-template-columns: repeat(3, 1fr); }
   .services--duo { grid-template-columns: repeat(2, 1fr); max-width: 760px; }
   .zones { grid-template-columns: repeat(3, 1fr); }
-  .section--coverage .zones { grid-template-columns: repeat(4, 1fr); }
+  .section--coverage .zones { grid-template-columns: repeat(5, 1fr); }
   .hero__layout { max-width: 720px; gap: 2.25rem; }
   .hero--banner .hero__layout { max-width: 760px; }
   .logo__mark { width: 60px; height: 60px; }
