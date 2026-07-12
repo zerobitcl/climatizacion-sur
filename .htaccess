@@ -23,11 +23,17 @@ DirectoryIndex index.html
 AddDefaultCharset UTF-8
 
 # --------------------------------------------------------------------------
-# Normalización de URLs (sin duplicar HTTPS/WWW)
+# Normalización de URLs + 301 clúster geográfico (rutas retiradas)
 # --------------------------------------------------------------------------
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # Rutas eliminadas → /puerto-montt/ (301 estricto)
+  RewriteRule ^valdivia(/.*)?$ https://www.climatizacionsur.cl/puerto-montt/ [R=301,L]
+  RewriteRule ^osorno(/.*)?$ https://www.climatizacionsur.cl/puerto-montt/ [R=301,L]
+  RewriteRule ^castro(/.*)?$ https://www.climatizacionsur.cl/puerto-montt/ [R=301,L]
+  RewriteRule ^chiloe(/.*)?$ https://www.climatizacionsur.cl/puerto-montt/ [R=301,L]
 
   # /index.html → URL limpia
   RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]

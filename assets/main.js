@@ -1,8 +1,7 @@
 /* ==========================================================================
    Climatización Sur — main.js compartido
-   Un solo archivo para los 3 silos: se cachea una vez y sirve en todo el sitio.
-   No depende de nada por página; cada landing solo define su propio
-   texto en el atributo data-msg de cada CTA (de dónde viene el lead).
+   Un solo archivo para todos los silos: se cachea una vez y sirve en todo el sitio.
+   Incluye ruteo de leads por IP (clúster lacustre) sin bloquear el render.
    ========================================================================== */
 (function () {
   'use strict';
@@ -11,7 +10,10 @@
     whatsapp: '56967240110',
     phoneDisplay: '+56 9 6724 0110',
     instagram: 'https://www.instagram.com/tecnicoolcl/',
-    brand: 'Climatización Sur'
+    brand: 'Climatización Sur',
+    cluster: ['puerto montt', 'puerto varas', 'llanquihue', 'frutillar'],
+    geoApi: 'https://ipapi.co/json/',
+    geoTimeoutMs: 2500
   };
 
   function buildWaUrl(baseMsg) {
@@ -55,7 +57,123 @@
     });
   }
 
+  function normalizeCity(name) {
+    return String(name || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim();
+  }
+
+  function isInCluster(city) {
+    var n = normalizeCity(city);
+    if (!n) return false;
+    return CONFIG.cluster.some(function (c) {
+      return n === c || n.indexOf(c) !== -1 || c.indexOf(n) !== -1;
+    });
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function getQuoteForm() {
+    return document.querySelector('form.js-quote-form') || document.querySelector('form');
+  }
+
+  function showWaitlist(city) {
+    var form = getQuoteForm();
+    if (!form || form.dataset.geoRouted === '1') return;
+
+    form.style.display = 'none';
+    form.dataset.geoRouted = '1';
+
+    var cityLabel = city || 'tu ciudad';
+    var wrap = document.createElement('div');
+    wrap.className = 'lead-waitlist';
+    wrap.setAttribute('role', 'region');
+    wrap.setAttribute('aria-label', 'Aviso de cobertura');
+    wrap.innerHTML =
+      '<p class="lead-waitlist__msg">Aún no tenemos cobertura técnica en <strong>' +
+      escapeHtml(cityLabel) +
+      '</strong>. Déjanos tu correo y te avisaremos</p>' +
+      '<form class="lead-waitlist__form" action="#" method="post" novalidate>' +
+      '<label class="visually-hidden" for="waitlist-email">Correo electrónico</label>' +
+      '<input id="waitlist-email" name="email" type="email" required autocomplete="email" ' +
+      'placeholder="tu@email.com" inputmode="email">' +
+      '<button type="submit" class="btn btn--primary">Avisarme</button>' +
+      '</form>';
+
+    form.parentNode.insertBefore(wrap, form.nextSibling);
+
+    wrap.querySelector('form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = wrap.querySelector('#waitlist-email');
+      var email = input && input.value ? input.value.trim() : '';
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        if (input) input.focus();
+        return;
+      }
+      wrap.innerHTML =
+        '<p class="lead-waitlist__msg">Gracias. Te avisaremos cuando tengamos cobertura en <strong>' +
+        escapeHtml(cityLabel) +
+        '</strong>.</p>';
+    });
+  }
+
+  function fetchCityWithTimeout() {
+    if (!window.fetch) return Promise.reject(new Error('no-fetch'));
+
+    var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var timer = setTimeout(function () {
+      if (ctrl) ctrl.abort();
+    }, CONFIG.geoTimeoutMs);
+
+    return fetch(CONFIG.geoApi, {
+      method: 'GET',
+      signal: ctrl ? ctrl.signal : undefined,
+      headers: { Accept: 'application/json' }
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('geo-http-' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        clearTimeout(timer);
+        return (data && (data.city || data.region)) || '';
+      })
+      .catch(function (err) {
+        clearTimeout(timer);
+        throw err;
+      });
+  }
+
+  /* Idle / post-load: no bloquea First Paint ni TTI */
+  function scheduleGeoRouting() {
+    var run = function () {
+      fetchCityWithTimeout()
+        .then(function (city) {
+          if (!city || isInCluster(city)) return;
+          showWaitlist(city);
+        })
+        .catch(function () {
+          /* Fail-open: formulario de cotización visible por defecto */
+        });
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(run, { timeout: 3000 });
+    } else {
+      setTimeout(run, 1);
+    }
+  }
+
   initWhatsAppLinks();
   initHeaderScroll();
   initSmoothAnchors();
+  scheduleGeoRouting();
 })();
