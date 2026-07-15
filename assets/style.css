@@ -430,11 +430,40 @@ a.footer__brand-row:hover .footer__brand { color: var(--cyan-light); }
 .wa-sticky__btn:hover { transform: scale(1.07); box-shadow: 0 6px 28px rgba(37,211,102,0.52); }
 .wa-sticky__btn svg { width: 30px; height: 30px; }
 
+/* Header CTA: priorizar WA legible en móvil / tablet estrecha (nav solo desde 900px) */
+@media (max-width: 899px) {
+  .header__inner { gap: 0.5rem; }
+  .logo { min-width: 0; flex: 1 1 auto; }
+  .header .btn--wa { flex-shrink: 0; }
+  .header .btn--wa .btn__num { display: none; }
+}
+
 @media (max-width: 480px) {
+  .container { width: min(100% - 1.25rem, 1120px); }
+  .header__inner { padding-block: 0.625rem; }
+  .logo { gap: 0.5rem; font-size: 0.9375rem; }
+  .logo__mark { width: 44px; height: 44px; }
+  .header .btn--wa {
+    padding: 0.55rem 0.85rem;
+    gap: 0.4rem;
+  }
+  .header .btn--wa .btn__stack span:first-child { font-size: 0.875rem; }
   .trust__brands { grid-template-columns: repeat(2, 1fr); }
-  .hero--banner .hero__visual--banner { max-width: 100%; }
-  .hero { padding: 5.75rem 0 2.5rem; }
+  .hero { min-height: auto; padding: 5rem 0 2rem; }
+  .hero--banner .hero__visual--banner {
+    max-width: 100%;
+    aspect-ratio: 16 / 10;
+    max-height: min(38vh, 220px);
+  }
   .hero__actions .btn--lg { width: 100%; }
+  /* FAB WhatsApp: hint siempre visible en touch (no hay hover) */
+  .wa-sticky { bottom: 1rem; right: 1rem; }
+  .wa-sticky__hint {
+    opacity: 1;
+    transform: none;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.7rem;
+  }
 }
 
 @media (min-width: 640px) {
