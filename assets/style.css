@@ -334,7 +334,7 @@ a { color: inherit; text-decoration: none; }
 .visit__price { color: var(--amber); }
 .visit p { font-size: 0.9375rem; color: rgba(255,255,255,0.7); max-width: 48ch; }
 
-/* B2B · Partner remoto (Santiago → Sur) */
+/* B2B · Partner técnico empresas (zona lacustre) */
 .b2b {
   background: linear-gradient(135deg, var(--navy) 0%, #16324f 100%);
   border-block-start: 1px solid rgba(0,180,216,0.22);
