@@ -1,20 +1,22 @@
 # Climatización Sur
-> Expertos en climatización de alta eficiencia, aerotermia y aire acondicionado Inverter en Puerto Montt, Puerto Varas, Llanquihue, Frutillar y Ancud.
+> Expertos en aire acondicionado inverter, calefacción y aerotermia en Puerto Montt, Puerto Varas, Llanquihue, Frutillar y Ancud.
 
-Climatización Sur es una empresa de ingeniería térmica especializada en la transición energética residencial e industrial. Reemplazamos sistemas de calefacción tradicionales (leña, gas, pellet) por bombas de calor de última generación, con máxima eficiencia energética, nula contaminación intra-domiciliaria y menor costo operativo. Servicios: aerotermia y bombas de calor, aire acondicionado Inverter frío/calor, y auditoría térmica (BTU / ROI).
+Climatización Sur instala y mantiene aire acondicionado y sistemas de calefacción eficiente en la Región de Los Lagos. Base operativa en Puerto Montt. Servicios: instalación llave en mano, mantención técnica, bombas de calor / aerotermia y refrigeración comercial.
 
 ## Páginas principales
-- [Inicio](https://www.climatizacionsur.cl/): Hub de Climatización Sur — aire acondicionado y calefacción eficiente.
-- [Calefacción eficiente](https://www.climatizacionsur.cl/calefaccion/): Comparativa leña/gas vs aerotermia y bomba de calor (página TOFU).
-- [Sitemap](https://www.climatizacionsur.cl/sitemap.xml): Índice XML de URLs canónicas del sitio.
+- [Inicio](https://www.climatizacionsur.cl/): Aire acondicionado y calefacción en Puerto Montt.
+- [Puerto Montt](https://www.climatizacionsur.cl/puerto-montt/): Hub local — aire acondicionado en Puerto Montt.
+- [Instalación](https://www.climatizacionsur.cl/instalacion-aire-acondicionado-puerto-montt/): Instalación de aire acondicionado en Puerto Montt.
+- [Mantención](https://www.climatizacionsur.cl/mantencion-aire-acondicionado-puerto-montt/): Mantención de aire acondicionado en Puerto Montt.
+- [Calefacción](https://www.climatizacionsur.cl/calefaccion/): Calefacción y bomba de calor en Puerto Montt.
+- [Sitemap](https://www.climatizacionsur.cl/sitemap.xml): Índice XML de URLs canónicas.
 
 ## Cobertura local
-- [Puerto Montt](https://www.climatizacionsur.cl/puerto-montt/): Climatización y aire acondicionado en Puerto Montt.
-- [Puerto Varas](https://www.climatizacionsur.cl/puerto-varas/): Climatización y aire acondicionado en Puerto Varas.
-- [Llanquihue](https://www.climatizacionsur.cl/llanquihue/): Climatización y aire acondicionado en Llanquihue.
-- [Frutillar](https://www.climatizacionsur.cl/frutillar/): Climatización y aire acondicionado en Frutillar.
-- [Ancud](https://www.climatizacionsur.cl/ancud/): Climatización y aire acondicionado en Ancud.
+- [Puerto Varas](https://www.climatizacionsur.cl/puerto-varas/): Aire acondicionado en Puerto Varas.
+- [Llanquihue](https://www.climatizacionsur.cl/llanquihue/): Aire acondicionado en Llanquihue.
+- [Frutillar](https://www.climatizacionsur.cl/frutillar/): Aire acondicionado en Frutillar.
+- [Ancud](https://www.climatizacionsur.cl/ancud/): Aire acondicionado en Ancud.
 
 ## Contacto
-- [Sitio web](https://www.climatizacionsur.cl/): Canal oficial de información y cotización.
-- [WhatsApp / teléfono](https://wa.me/56967240110): +56 9 6724 0110 — cotización técnica y visita en terreno.
+- [Sitio web](https://www.climatizacionsur.cl/)
+- [WhatsApp / teléfono](https://wa.me/56967240110): +56 9 6724 0110

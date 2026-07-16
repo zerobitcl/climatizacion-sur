@@ -26,7 +26,7 @@
   }
 
   function cityFromPath() {
-    var m = window.location.pathname.match(/\/(puerto-montt|puerto-varas|llanquihue|frutillar|ancud|calefaccion)\//);
+    var m = window.location.pathname.match(/\/(puerto-montt|puerto-varas|llanquihue|frutillar|ancud|calefaccion|instalacion-aire-acondicionado-puerto-montt|mantencion-aire-acondicionado-puerto-montt)\//);
     if (!m) return '';
     var map = {
       'puerto-montt': 'Puerto Montt',
@@ -34,7 +34,9 @@
       llanquihue: 'Llanquihue',
       frutillar: 'Frutillar',
       ancud: 'Ancud',
-      calefaccion: 'Calefacción (hub)'
+      calefaccion: 'Calefacción (hub)',
+      'instalacion-aire-acondicionado-puerto-montt': 'Puerto Montt',
+      'mantencion-aire-acondicionado-puerto-montt': 'Puerto Montt'
     };
     return map[m[1]] || '';
   }
