@@ -94,7 +94,7 @@
         }
       },
       {
-        "@type": "LocalBusiness",
+        "@type": ["LocalBusiness", "HVACBusiness"],
         "@id": "https://www.climatizacionsur.cl/puerto-montt/#localbusiness",
         "name": "Climatización Sur Puerto Montt",
         "description": "Servicios especializados de instalación de bombas de calor, sistemas de aerotermia y climatización eficiente en la zona de Puerto Montt.",
@@ -169,44 +169,12 @@
         }
       },
       {
-        "@type": "HVACBusiness",
-        "@id": "https://www.climatizacionsur.cl/puerto-montt/#hvacbusiness",
-        "name": "Climatización Sur",
-        "description": "Climatización Sur ofrece aire acondicionado, calefacción e instalación de sistemas inverter en Puerto Montt.",
-        "url": "https://www.climatizacionsur.cl",
-        "telephone": "+56967240110",
-        "priceRange": "$$",
-        "image": "https://www.climatizacionsur.cl/assets/og-climatizacion-sur.webp",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Puerto Montt",
-          "addressRegion": "Los Lagos",
-          "addressCountry": "CL"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": -41.4717,
-          "longitude": -72.9369
-        },
-        "areaServed": [
-          { "@type": "City", "name": "Puerto Montt" },
-          { "@type": "City", "name": "Puerto Varas" },
-          { "@type": "City", "name": "Llanquihue" },
-          { "@type": "City", "name": "Frutillar" },
-          { "@type": "City", "name": "Ancud" }
-        ]
-      },
-      {
         "@type": "Service",
         "@id": "https://www.climatizacionsur.cl/puerto-montt/#service-inverter",
         "name": "Instalación de Aire Acondicionado Inverter",
         "serviceType": "Instalación de Aire Acondicionado Inverter",
         "description": "Instalación profesional de aire acondicionado inverter para climatización y calefacción eficiente en Puerto Montt, ofrecida por Climatización Sur.",
-        "provider": {
-          "@type": "HVACBusiness",
-          "name": "Climatización Sur",
-          "url": "https://www.climatizacionsur.cl"
-        },
+        "provider": { "@id": "https://www.climatizacionsur.cl/puerto-montt/#localbusiness" },
         "areaServed": [
           { "@type": "City", "name": "Puerto Montt" },
           { "@type": "City", "name": "Puerto Varas" },
@@ -287,15 +255,9 @@
       <div class="hero__overlay" aria-hidden="true"></div>
       <nav class="breadcrumb" aria-label="Ruta de navegación">
         <div class="container">
-          <ol itemscope itemtype="https://schema.org/BreadcrumbList">
-            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-              <a itemprop="item" href="/"><span itemprop="name">Inicio</span></a>
-              <meta itemprop="position" content="1">
-            </li>
-            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
-              <span itemprop="name">Puerto Montt</span>
-              <meta itemprop="position" content="2">
-            </li>
+          <ol>
+            <li><a href="/">Inicio</a></li>
+            <li aria-current="page">Puerto Montt</li>
           </ol>
         </div>
       </nav>
@@ -436,6 +398,7 @@
               <li>Proveemos el equipo completo: no necesitas comprarlo en Santiago</li>
             </ul>
             <a href="#" class="btn btn--wa btn--full js-wa" data-msg="Hola, quiero cotizar climatización, aire acondicionado o calefacción en Puerto Montt. Llegué desde la web de Climatización Sur.">WhatsApp +56 9 6724 0110</a>
+            <a href="/instalacion-aire-acondicionado-puerto-montt/" class="service-card__more">Ver detalle de instalación →</a>
           </article>
 
           <article class="service-card">
@@ -450,6 +413,7 @@
               <li>Planes programados para hogar y comercio</li>
             </ul>
             <a href="#" class="btn btn--wa btn--full js-wa" data-msg="Hola, quiero cotizar climatización, aire acondicionado o calefacción en Puerto Montt. Llegué desde la web de Climatización Sur.">Solicitar Mantenimiento</a>
+            <a href="/mantencion-aire-acondicionado-puerto-montt/" class="service-card__more">Ver detalle de mantención →</a>
           </article>
 
           <article class="service-card">
