@@ -601,6 +601,7 @@ a.footer__brand-row:hover .footer__brand { color: var(--cyan-light); }
 }
 .quote-form input,
 .quote-form textarea,
+.quote-form select,
 .lead-waitlist input {
   width: 100%;
   padding: 0.75rem 1rem;
@@ -612,6 +613,7 @@ a.footer__brand-row:hover .footer__brand { color: var(--cyan-light); }
 }
 .quote-form input:focus,
 .quote-form textarea:focus,
+.quote-form select:focus,
 .lead-waitlist input:focus {
   outline: 2px solid var(--cyan);
   outline-offset: 1px;
@@ -701,5 +703,80 @@ a.footer__brand-row:hover .footer__brand { color: var(--cyan-light); }
 @media (max-width: 480px) {
   .cta-band__actions .btn--lg { width: 100%; }
 }
+
+/* Sprite de íconos: no ocupa layout */
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* Calculadora de volumen · /camaras-de-frio/ */
+.volume-calc {
+  max-width: 640px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+}
+.volume-calc__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+.volume-calc label {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.volume-calc input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(11, 26, 46, 0.16);
+  border-radius: 10px;
+  font: inherit;
+  color: var(--navy);
+  background: var(--white);
+}
+.volume-calc input:focus { outline: 2px solid var(--cyan); outline-offset: 1px; }
+.volume-calc__result {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+@media (min-width: 640px) {
+  .volume-calc__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.case-card__pending {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(244, 162, 97, 0.18);
+  color: #9a5412;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Contenido editorial: ciudades y guías */
+.prose { max-width: 68ch; }
+.prose p + p { margin-top: 0.9rem; }
+.prose h3 { margin: 1.25rem 0 0.4rem; font-size: 1.05rem; }
+.prose a { color: #0077a8; font-weight: 600; }
+.prose a:hover { text-decoration: underline; }
+.guide-list { display: grid; gap: 0.875rem; list-style: none; }
+.guide-list a {
+  display: block;
+  padding: 1.1rem 1.25rem;
+  background: var(--white);
+  border: 1px solid rgba(11, 26, 46, 0.08);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(11, 26, 46, 0.04);
+}
+.guide-list a:hover { border-color: var(--cyan); }
+.guide-list strong { display: block; margin-bottom: 0.25rem; }
+.guide-list span { color: var(--gray-400); font-size: 0.9375rem; }
+.section .breadcrumb { color: var(--gray-400); pointer-events: auto; }
+.section .breadcrumb ol { justify-content: flex-start; }
+.section .breadcrumb a { color: #0077a8; }
+.section .breadcrumb [aria-current="page"] { color: var(--navy); }
 
 

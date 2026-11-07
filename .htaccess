@@ -85,3 +85,23 @@ AddDefaultCharset UTF-8
 <Files "sitemap.xml">
   Require all granted
 </Files>
+
+# --------------------------------------------------------------------------
+# Caché larga solo en assets versionados (?v=), HSTS, AVIF y Brotli
+# --------------------------------------------------------------------------
+<IfModule mod_mime.c>
+  AddType image/avif .avif
+  AddType image/webp .webp
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|webp|avif|jpe?g|png|svg|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/xml
+  AddOutputFilterByType BROTLI_COMPRESS application/javascript application/json image/svg+xml
+</IfModule>

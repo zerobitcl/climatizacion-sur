@@ -1,23 +1,21 @@
 /* ==========================================================================
    Climatización Sur — main.js compartido
-   WhatsApp CTAs + cotización por WA + ruteo geo IP (fail-open).
+   WhatsApp, cotización, calculadora de m³ y medición diferida.
+   El ruteo por IP se eliminó: ocultaba el formulario a clientes B2B
+   fuera de la zona (el caso "empresas de Santiago").
+   GTM-T68TCXQS: contenedor Tag Manager. Eventos custom via dataLayer.
    ========================================================================== */
 (function () {
   'use strict';
 
   var CONFIG = {
     whatsapp: '56967240110',
-    phoneDisplay: '+56 9 6724 0110',
-    instagram: 'https://www.instagram.com/tecnicoolcl/',
     brand: 'Climatización Sur',
-    cluster: ['puerto montt', 'puerto varas', 'llanquihue', 'frutillar', 'ancud'],
-    geoApi: 'https://ipapi.co/json/',
-    geoTimeoutMs: 2500
+    gtm: 'GTM-T68TCXQS'
   };
 
   function buildWaUrl(baseMsg) {
-    var origin = window.location.href;
-    var fullMsg = baseMsg + '\n\n— Origen: ' + origin;
+    var fullMsg = baseMsg + '\n\n— Origen: ' + window.location.href;
     return 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(fullMsg);
   }
 
@@ -26,7 +24,8 @@
   }
 
   function cityFromPath() {
-    var m = window.location.pathname.match(/\/(puerto-montt|puerto-varas|llanquihue|frutillar|ancud|calefaccion)\//);
+    var path = window.location.pathname;
+    var m = path.match(/\/(puerto-montt|puerto-varas|llanquihue|frutillar|ancud|calefaccion|camaras-de-frio|guias)(\/|$)/);
     if (!m) return '';
     var map = {
       'puerto-montt': 'Puerto Montt',
@@ -34,9 +33,47 @@
       llanquihue: 'Llanquihue',
       frutillar: 'Frutillar',
       ancud: 'Ancud',
-      calefaccion: 'Calefacción (hub)'
+      calefaccion: 'Calefacción (hub)',
+      'camaras-de-frio': 'Cámaras de frío',
+      guias: 'Guías'
     };
     return map[m[1]] || '';
+  }
+
+  function track(name, params) {
+    var payload = params || {};
+    payload.page = payload.page || window.location.pathname;
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(Object.assign({ event: name }, payload));
+  }
+
+  function loadGtm() {
+    if (!CONFIG.gtm || window.__gtmLoaded) return;
+    window.__gtmLoaded = true;
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    var first = document.getElementsByTagName('script')[0];
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(CONFIG.gtm);
+    if (first && first.parentNode) first.parentNode.insertBefore(script, first);
+    else document.head.appendChild(script);
+  }
+
+  function initAnalytics() {
+    document.addEventListener('click', function (event) {
+      var wa = event.target.closest ? event.target.closest('.js-wa') : null;
+      if (wa) {
+        track('click_whatsapp', { cta_id: wa.getAttribute('data-cta') || 'wa' });
+        return;
+      }
+      var tel = event.target.closest ? event.target.closest('a[href^="tel:"]') : null;
+      if (tel) track('click_call', { cta_id: tel.getAttribute('data-cta') || 'call' });
+    });
+
+    var start = function () { loadGtm(); };
+    if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 2500 });
+    else window.addEventListener('load', start, { once: true });
   }
 
   function initWhatsAppLinks() {
@@ -81,18 +118,25 @@
 
   function buildQuoteMessage(form) {
     var city = form.getAttribute('data-city') || cityFromPath() || 'Sin especificar';
-    var name = fieldValue(form, 'name');
-    var phone = fieldValue(form, 'phone');
-    var message = fieldValue(form, 'message');
     var lines = [
       '*Cotización web — ' + CONFIG.brand + '*',
       '',
       'Hola, solicito una cotización técnica.',
       '',
       '• *Comuna / zona:* ' + city,
-      '• *Nombre:* ' + name,
-      '• *Teléfono:* ' + phone
+      '• *Nombre:* ' + fieldValue(form, 'name'),
+      '• *Teléfono:* ' + fieldValue(form, 'phone')
     ];
+    var extras = [
+      ['company', 'Empresa'],
+      ['trade', 'Rubro'],
+      ['chamber', 'Tipo de cámara']
+    ];
+    extras.forEach(function (pair) {
+      var value = fieldValue(form, pair[0]);
+      if (value) lines.push('• *' + pair[1] + ':* ' + value);
+    });
+    var message = fieldValue(form, 'message');
     if (message) lines.push('• *Detalle del proyecto:* ' + message);
     lines.push('', 'Quedo atento(a) a la visita técnica o cotización.');
     return lines.join('\n');
@@ -105,148 +149,76 @@
         var name = fieldValue(form, 'name');
         var phone = fieldValue(form, 'phone');
         if (!name) {
-          var n = form.querySelector('[name="name"]');
-          if (n) n.focus();
+          var nameInput = form.querySelector('[name="name"]');
+          if (nameInput) nameInput.focus();
           return;
         }
         if (!phone || phone.replace(/\D/g, '').length < 8) {
-          var p = form.querySelector('[name="phone"]');
-          if (p) p.focus();
+          var phoneInput = form.querySelector('[name="phone"]');
+          if (phoneInput) phoneInput.focus();
           return;
         }
+        track('submit_quote', { cta_id: 'formulario', city: form.getAttribute('data-city') || cityFromPath() });
         openWhatsApp(buildQuoteMessage(form));
       });
     });
   }
 
-  function normalizeCity(name) {
-    return String(name || '')
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .trim();
+  function formatM3(value) {
+    return String(Math.round(value * 10) / 10).replace('.', ',');
   }
 
-  function isInCluster(city) {
-    var n = normalizeCity(city);
-    if (!n) return false;
-    return CONFIG.cluster.some(function (c) {
-      return n === c || n.indexOf(c) !== -1 || c.indexOf(n) !== -1;
-    });
-  }
+  function initVolumeCalc() {
+    var form = document.querySelector('form.js-volume-calc');
+    if (!form) return;
+    var out = form.querySelector('.volume-calc__result');
 
-  function escapeHtml(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
+    function read() {
+      var largo = parseFloat(fieldValue(form, 'largo'));
+      var ancho = parseFloat(fieldValue(form, 'ancho'));
+      var alto = parseFloat(fieldValue(form, 'alto'));
+      if (![largo, ancho, alto].every(function (n) { return n > 0; })) return null;
+      return { largo: largo, ancho: ancho, alto: alto, m3: largo * ancho * alto };
+    }
 
-  function getQuoteForm() {
-    return document.querySelector('form.js-quote-form');
-  }
+    function paint() {
+      var data = read();
+      if (!out) return;
+      out.textContent = data
+        ? 'Volumen interior aproximado: ' + formatM3(data.m3) + ' m³.'
+        : 'Ingresa las tres medidas interiores.';
+    }
 
-  function showWaitlist(city) {
-    var form = getQuoteForm();
-    if (!form || form.dataset.geoRouted === '1') return;
+    form.addEventListener('input', paint);
 
-    form.style.display = 'none';
-    form.dataset.geoRouted = '1';
-
-    var cityLabel = city || 'tu ciudad';
-    var wrap = document.createElement('div');
-    wrap.className = 'lead-waitlist';
-    wrap.setAttribute('role', 'region');
-    wrap.setAttribute('aria-label', 'Aviso de cobertura');
-    wrap.innerHTML =
-      '<p class="lead-waitlist__msg">Aún no tenemos cobertura técnica en <strong>' +
-      escapeHtml(cityLabel) +
-      '</strong>. Déjanos tu correo y te avisaremos por WhatsApp</p>' +
-      '<form class="lead-waitlist__form" action="#" method="post" novalidate>' +
-      '<label class="visually-hidden" for="waitlist-email">Correo electrónico</label>' +
-      '<input id="waitlist-email" name="email" type="email" required autocomplete="email" ' +
-      'placeholder="tu@email.com" inputmode="email">' +
-      '<button type="submit" class="btn btn--primary">Avisarme</button>' +
-      '</form>';
-
-    form.parentNode.insertBefore(wrap, form.nextSibling);
-
-    wrap.querySelector('form').addEventListener('submit', function (e) {
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var input = wrap.querySelector('#waitlist-email');
-      var email = input && input.value ? input.value.trim() : '';
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        if (input) input.focus();
+      var data = read();
+      if (!data) {
+        var first = form.querySelector('input');
+        if (first) first.focus();
         return;
       }
-      var msg = [
-        '*Lista de espera — ' + CONFIG.brand + '*',
+      track('calc_used', { cta_id: 'calculadora', volume_m3: Math.round(data.m3 * 10) / 10 });
+      openWhatsApp([
+        '*Volumen de cámara — ' + CONFIG.brand + '*',
         '',
-        'Hola, aún no tienen cobertura en mi ciudad y quiero que me avisen.',
+        'Hola, calculé el volumen interior de una cámara de frío y quiero cotizar.',
         '',
-        '• *Ciudad detectada:* ' + cityLabel,
-        '• *Email:* ' + email,
+        '• *Largo:* ' + formatM3(data.largo) + ' m',
+        '• *Ancho:* ' + formatM3(data.ancho) + ' m',
+        '• *Alto:* ' + formatM3(data.alto) + ' m',
+        '• *Volumen:* ' + formatM3(data.m3) + ' m³',
         '',
-        'Gracias.'
-      ].join('\n');
-      openWhatsApp(msg);
-      wrap.innerHTML =
-        '<p class="lead-waitlist__msg">Perfecto. Se abrirá WhatsApp con tus datos para avisar cobertura en <strong>' +
-        escapeHtml(cityLabel) +
-        '</strong>.</p>';
+        'Quedo atento(a) a la visita técnica.'
+      ].join('\n'));
     });
-  }
-
-  function fetchCityWithTimeout() {
-    if (!window.fetch) return Promise.reject(new Error('no-fetch'));
-
-    var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
-    var timer = setTimeout(function () {
-      if (ctrl) ctrl.abort();
-    }, CONFIG.geoTimeoutMs);
-
-    return fetch(CONFIG.geoApi, {
-      method: 'GET',
-      signal: ctrl ? ctrl.signal : undefined,
-      headers: { Accept: 'application/json' }
-    })
-      .then(function (res) {
-        if (!res.ok) throw new Error('geo-http-' + res.status);
-        return res.json();
-      })
-      .then(function (data) {
-        clearTimeout(timer);
-        return (data && (data.city || data.region)) || '';
-      })
-      .catch(function (err) {
-        clearTimeout(timer);
-        throw err;
-      });
-  }
-
-  function scheduleGeoRouting() {
-    var run = function () {
-      fetchCityWithTimeout()
-        .then(function (city) {
-          if (!city || isInCluster(city)) return;
-          showWaitlist(city);
-        })
-        .catch(function () {
-          /* Fail-open */
-        });
-    };
-
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(run, { timeout: 3000 });
-    } else {
-      setTimeout(run, 1);
-    }
   }
 
   initWhatsAppLinks();
   initHeaderScroll();
   initSmoothAnchors();
   initQuoteForms();
-  scheduleGeoRouting();
+  initVolumeCalc();
+  initAnalytics();
 })();
