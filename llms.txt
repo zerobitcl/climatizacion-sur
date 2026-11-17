@@ -14,6 +14,7 @@ Climatización Sur es una empresa de ingeniería térmica especializada en la tr
 - [Llanquihue](https://www.climatizacionsur.cl/llanquihue/): Climatización y aire acondicionado en Llanquihue.
 - [Frutillar](https://www.climatizacionsur.cl/frutillar/): Climatización y aire acondicionado en Frutillar.
 - [Ancud](https://www.climatizacionsur.cl/ancud/): Climatización y aire acondicionado en Ancud.
+- [Chiloé](https://www.climatizacionsur.cl/chiloe/): Aire acondicionado y climatización en Chiloé y Castro.
 
 ## Contacto
 - [Sitio web](https://www.climatizacionsur.cl/): Canal oficial de información y cotización.

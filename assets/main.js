@@ -3,7 +3,8 @@
    WhatsApp, cotización, calculadora de m³ y medición diferida.
    El ruteo por IP se eliminó: ocultaba el formulario a clientes B2B
    fuera de la zona (el caso "empresas de Santiago").
-   GTM-T68TCXQS: contenedor Tag Manager. Eventos custom via dataLayer.
+   GTM-T68TCXQS: contenedor Tag Manager. Eventos key via dataLayer + gtag.
+   Key events: click_whatsapp, phone_click, generate_lead.
    ========================================================================== */
 (function () {
   'use strict';
@@ -11,7 +12,8 @@
   var CONFIG = {
     whatsapp: '56967240110',
     brand: 'Climatización Sur',
-    gtm: 'GTM-T68TCXQS'
+    gtm: 'GTM-T68TCXQS',
+    ga4: 'G-18GK9CJ6QJ'
   };
 
   function buildWaUrl(baseMsg) {
@@ -25,7 +27,7 @@
 
   function cityFromPath() {
     var path = window.location.pathname;
-    var m = path.match(/\/(puerto-montt|puerto-varas|llanquihue|frutillar|ancud|calefaccion|camaras-de-frio|guias)(\/|$)/);
+    var m = path.match(/\/(puerto-montt|puerto-varas|llanquihue|frutillar|ancud|chiloe|calefaccion|camaras-de-frio|guias)(\/|$)/);
     if (!m) return '';
     var map = {
       'puerto-montt': 'Puerto Montt',
@@ -33,6 +35,7 @@
       llanquihue: 'Llanquihue',
       frutillar: 'Frutillar',
       ancud: 'Ancud',
+      chiloe: 'Chiloé',
       calefaccion: 'Calefacción (hub)',
       'camaras-de-frio': 'Cámaras de frío',
       guias: 'Guías'
@@ -45,6 +48,9 @@
     payload.page = payload.page || window.location.pathname;
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push(Object.assign({ event: name }, payload));
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', name, payload);
+    }
   }
 
   function loadGtm() {
@@ -60,18 +66,60 @@
     else document.head.appendChild(script);
   }
 
+  function loadGtag() {
+    if (!CONFIG.ga4 || window.__gtagLoaded) return;
+    window.__gtagLoaded = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', CONFIG.ga4);
+    var first = document.getElementsByTagName('script')[0];
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(CONFIG.ga4);
+    if (first && first.parentNode) first.parentNode.insertBefore(script, first);
+    else document.head.appendChild(script);
+  }
+
+  function isWhatsAppHref(href) {
+    if (!href) return false;
+    return /wa\.me\//i.test(href) || /api\.whatsapp\.com/i.test(href);
+  }
+
   function initAnalytics() {
     document.addEventListener('click', function (event) {
-      var wa = event.target.closest ? event.target.closest('.js-wa') : null;
+      var el = event.target.closest ? event.target.closest('a, button, .js-wa') : null;
+      if (!el) return;
+
+      var wa = el.classList && el.classList.contains('js-wa')
+        ? el
+        : (el.closest ? el.closest('.js-wa') : null);
+      if (!wa && el.tagName === 'A' && isWhatsAppHref(el.getAttribute('href') || '')) {
+        wa = el;
+      }
       if (wa) {
-        track('click_whatsapp', { cta_id: wa.getAttribute('data-cta') || 'wa' });
+        track('click_whatsapp', {
+          link_url: wa.href || wa.getAttribute('href') || '',
+          cta_location: wa.dataset && wa.dataset.cta ? wa.dataset.cta : 'button'
+        });
         return;
       }
-      var tel = event.target.closest ? event.target.closest('a[href^="tel:"]') : null;
-      if (tel) track('click_call', { cta_id: tel.getAttribute('data-cta') || 'call' });
+
+      var tel = el.closest ? el.closest('a[href^="tel:"]') : null;
+      if (!tel && el.tagName === 'A' && (el.getAttribute('href') || '').indexOf('tel:') === 0) {
+        tel = el;
+      }
+      if (tel) {
+        track('phone_click', {
+          phone_number: tel.getAttribute('href') || ''
+        });
+      }
     });
 
-    var start = function () { loadGtm(); };
+    var start = function () {
+      loadGtm();
+      loadGtag();
+    };
     if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 2500 });
     else window.addEventListener('load', start, { once: true });
   }
@@ -158,7 +206,11 @@
           if (phoneInput) phoneInput.focus();
           return;
         }
-        track('submit_quote', { cta_id: 'formulario', city: form.getAttribute('data-city') || cityFromPath() });
+        track('generate_lead', {
+          cta_id: 'formulario',
+          city: form.getAttribute('data-city') || cityFromPath(),
+          method: 'quote_form'
+        });
         openWhatsApp(buildQuoteMessage(form));
       });
     });

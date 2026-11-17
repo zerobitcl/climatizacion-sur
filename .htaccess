@@ -29,11 +29,11 @@ AddDefaultCharset UTF-8
   RewriteEngine On
   RewriteBase /
 
-  # Rutas eliminadas → /puerto-montt/ (301 estricto)
+  # Rutas eliminadas → hub local (301 estricto)
   RewriteRule ^valdivia(/.*)?$ https://www.climatizacionsur.cl/puerto-montt/ [R=301,L]
   RewriteRule ^osorno(/.*)?$ https://www.climatizacionsur.cl/puerto-montt/ [R=301,L]
-  RewriteRule ^castro(/.*)?$ https://www.climatizacionsur.cl/puerto-montt/ [R=301,L]
-  RewriteRule ^chiloe(/.*)?$ https://www.climatizacionsur.cl/puerto-montt/ [R=301,L]
+  # Castro → landing Chiloé (evita canibalizar Puerto Montt)
+  RewriteRule ^castro(/.*)?$ https://www.climatizacionsur.cl/chiloe/ [R=301,L]
 
   # /index.html → URL limpia
   RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
